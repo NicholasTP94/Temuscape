@@ -236,6 +236,7 @@ GameObject:
   - component: {fileID: 448081690}
   - component: {fileID: 448081689}
   - component: {fileID: 448081693}
+  - component: {fileID: 448081694}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -378,6 +379,20 @@ MonoBehaviour:
     m_Bits: 128
   interactionAction: {fileID: -1561641357027363667, guid: 6c51c16316672f84e9cd1b3b72061b8e, type: 3}
   interactionOrigin: {fileID: 446567972}
+--- !u!114 &448081694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448081688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97e0b2262d120ae40ab785df73690bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
+  testItem: {fileID: 0}
+  testQuantity: 0
 --- !u!1 &1188874550
 GameObject:
   m_ObjectHideFlags: 0
