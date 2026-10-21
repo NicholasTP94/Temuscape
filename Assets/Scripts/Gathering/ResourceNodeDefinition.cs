@@ -9,9 +9,15 @@ public class ResourceNodeDefinition: ScriptableObject
     [SerializeField] private ItemDefinition dropItem;
     [SerializeField] private int dropQuantity;
 
+    [SerializeField] private ToolType requieredToolType;
+    [SerializeField] private ToolTier requieredToolTier;
+
     public string DisplayName => displayName;
     public ResourceType ResourceType => resourceType;
     public int MaxHealth => maxHealth;
     public ItemDefinition DropItem => dropItem;
     public int DropQuantity => dropQuantity;
+
+    public ToolType RequieredToolType => requieredToolType;
+    public ToolTier RequieredToolTier => requieredToolTier;
 }

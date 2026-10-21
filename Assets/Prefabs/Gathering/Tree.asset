@@ -17,3 +17,5 @@ MonoBehaviour:
   maxHealth: 100
   dropItem: {fileID: 11400000, guid: d517cac56bc6d7f4cb4a0641fa6292ca, type: 2}
   dropQuantity: 4
+  requieredToolType: 1
+  requieredToolTier: 1
