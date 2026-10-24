@@ -6,8 +6,6 @@ public class ResourceNode: MonoBehaviour
 {
     [SerializeField] private ResourceNodeDefinition definition;
 
-    [SerializeField] private ToolDefinition testTool;
-
     private int currentHealth;
 
     public int CurrentHealth => currentHealth;
@@ -16,14 +14,6 @@ public class ResourceNode: MonoBehaviour
     private void Awake()
     {
         currentHealth = definition.MaxHealth;
-    }
-
-    private void Update()
-    {
-        if (Keyboard.current.hKey.wasPressedThisFrame)
-        {
-            Hit(testTool);
-        }
     }
 
     private void TakeDamage(int damage)

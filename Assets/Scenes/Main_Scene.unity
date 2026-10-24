@@ -237,6 +237,8 @@ GameObject:
   - component: {fileID: 448081689}
   - component: {fileID: 448081693}
   - component: {fileID: 448081694}
+  - component: {fileID: 448081696}
+  - component: {fileID: 448081695}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -285,6 +287,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: f704cad7-3df5-40fb-a00a-22fc08778c65
     m_ActionName: 'Player/Interact[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bd09664a-1258-4ade-8742-4ba1df6568e6
+    m_ActionName: 'Player/Gather[/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -393,6 +399,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
   testItem: {fileID: 0}
   testQuantity: 0
+--- !u!114 &448081695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448081688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c91977bdd663c204985c70877d85f321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGathering
+  playerEquipment: {fileID: 448081696}
+  gatheringOrigin: {fileID: 446567972}
+  gatheringDistance: 2
+  gatheringLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  gatherAction: {fileID: 5224877599859413121, guid: 6c51c16316672f84e9cd1b3b72061b8e, type: 3}
+  gatheringAngle: 90
+--- !u!114 &448081696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448081688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac2d85cc233c5f94e8d9588d91bc0953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerEquipment
+  startingTool: {fileID: 11400000, guid: 58d9f699ae1bd5447aa127a72a0a4ec3, type: 2}
 --- !u!1 &586839220
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,7 +445,7 @@ GameObject:
   - component: {fileID: 586839223}
   - component: {fileID: 586839222}
   - component: {fileID: 586839221}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TreeTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +465,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceNode
   definition: {fileID: 11400000, guid: 5cd723f3ff37ad648994d45291d9ac06, type: 2}
-  testTool: {fileID: 11400000, guid: 552f9d25ccf724d47b61c3123164e9dd, type: 2}
 --- !u!65 &586839222
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -564,7 +602,7 @@ GameObject:
   - component: {fileID: 1446220438}
   - component: {fileID: 1446220437}
   - component: {fileID: 1446220436}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BlackOreTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -584,7 +622,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceNode
   definition: {fileID: 11400000, guid: 58019ab4216587444985c9ee2579e082, type: 2}
-  testTool: {fileID: 11400000, guid: b5e443d02a253774e8f565624602c1b0, type: 2}
 --- !u!65 &1446220437
 BoxCollider:
   m_ObjectHideFlags: 0
