@@ -43,4 +43,10 @@ public class ItemPickup: MonoBehaviour, IInteractable
             Destroy(gameObject);
         }
     }
+
+    public void Innitialize(ItemDefinition item, int amount)
+    {
+        itemDefinition = item;
+        quantity = amount;
+    }
 }

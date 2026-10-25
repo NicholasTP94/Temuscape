@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class ResourceNode: MonoBehaviour
 {
     [SerializeField] private ResourceNodeDefinition definition;
+    [SerializeField] private ItemPickup itemPickupPrefab;
 
     private int currentHealth;
 
@@ -35,6 +36,9 @@ public class ResourceNode: MonoBehaviour
 
     private void BreakNode()
     {
+        ItemPickup pickup = Instantiate(itemPickupPrefab, transform.position, Quaternion.identity);
+        pickup.Innitialize(definition.DropItem, definition.DropQuantity);
+
         Debug.Log($"{definition.DisplayName} destroyed. " + $"Dropped {definition.DropQuantity} " + $"{definition.DropItem.DisplayName}");
 
         Destroy(gameObject);

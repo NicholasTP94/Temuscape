@@ -465,6 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceNode
   definition: {fileID: 11400000, guid: 5cd723f3ff37ad648994d45291d9ac06, type: 2}
+  itemPickupPrefab: {fileID: 4131773812031980231, guid: d0afba17db25d4e48856bda00c36a122, type: 3}
 --- !u!65 &586839222
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -622,6 +623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceNode
   definition: {fileID: 11400000, guid: 58019ab4216587444985c9ee2579e082, type: 2}
+  itemPickupPrefab: {fileID: 4131773812031980231, guid: d0afba17db25d4e48856bda00c36a122, type: 3}
 --- !u!65 &1446220437
 BoxCollider:
   m_ObjectHideFlags: 0
