@@ -57,7 +57,7 @@ public class PlayerInteraction : MonoBehaviour
 
             float horizontalDistance = horizontalDirection.magnitude;
 
-            bool isCloseEnough = horizontalDistance <= horizontalDirection.magnitude;
+            bool isCloseEnough = horizontalDistance <= closeInteractionRadius;
 
             bool isInsideAngle = angle <= interactionAngle * 0.5f;
 
