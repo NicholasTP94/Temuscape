@@ -11,5 +11,4 @@ public class PlayerInventory: MonoBehaviour
     {
         inventory = new Inventory();
     }
-
 }

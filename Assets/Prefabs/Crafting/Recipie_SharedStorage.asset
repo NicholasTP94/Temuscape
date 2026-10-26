@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74da4344ea631644db37c2eb371f1425, type: 3}
+  m_Name: Recipie_SharedStorage
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipeDefinition
+  recipeId: sharedStorage
+  displayName: Shared storage
+  requiredStation: 1
+  ingredients:
+  - item: {fileID: 11400000, guid: d517cac56bc6d7f4cb4a0641fa6292ca, type: 2}
+    quanity: 20
+  - item: {fileID: 11400000, guid: cbc4c7584832ba74f8d3cdad40f3b4ee, type: 2}
+    quanity: 10
+  resultItem: {fileID: 11400000, guid: 6ca65a3155df5ea42be771c0d928d8fb, type: 2}
+  resultQuanity: 1

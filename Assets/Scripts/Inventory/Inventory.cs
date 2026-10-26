@@ -17,6 +17,36 @@ public class Inventory
         }
     }
 
+    public bool CanAddItem(ItemDefinition item, int quantity)
+    {
+        if (item == null || quantity <= 0)
+        {
+            return false;
+        }
+
+        int remainingQuantity = quantity;
+
+        foreach (InventorySlot slot in slots)
+        {
+
+            if (slot.IsEmpty)
+            {
+                remainingQuantity -= item.MaxStack;
+            }
+            else if (slot.Item == item && slot.Quantity < item.MaxStack)
+            {
+                remainingQuantity -= item.MaxStack - slot.Quantity;
+            }
+
+            if (remainingQuantity <= 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public int AddItem(ItemDefinition item, int quantity)
     {
         if (item == null || quantity <= 0)
@@ -77,5 +107,66 @@ public class Inventory
         int addedQuantity = quantity - remainingQuantity;
 
         return addedQuantity;
+    }
+
+    public int GetItemQuantity(ItemDefinition item)
+    {
+        if (item == null)
+        {
+            return 0;
+        }
+
+        int totalQuantity = 0;
+
+        foreach (InventorySlot slot in slots)
+        {
+            if (!slot.IsEmpty && slot.Item == item)
+            {
+                totalQuantity += slot.Quantity;
+            }
+        }
+
+        return totalQuantity;
+    }
+
+    public bool HasItem(ItemDefinition item, int quantity)
+    {
+        if (item == null || quantity <= 0)
+        {
+            return false;
+        }
+
+        return GetItemQuantity(item) >= quantity;
+    }
+
+    public bool RemoveItem(ItemDefinition item, int quantity)
+    {
+        if (!HasItem(item, quantity))
+        {
+            return false;
+        }
+
+        int remainingQuantity = quantity;
+
+        foreach (InventorySlot slot in slots)
+        {
+            if (slot.IsEmpty || slot.Item != item)
+            {
+                continue;
+            }
+
+            int amountToRemove = System.Math.Min(remainingQuantity, slot.Quantity);
+
+            slot.RemoveQuantity(amountToRemove);
+
+            remainingQuantity -= amountToRemove;
+
+            if (remainingQuantity <= 0)
+            {
+                return true;
+            }
+        }
+
+        return true;
     }
 }
