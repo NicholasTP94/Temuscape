@@ -8,6 +8,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private LayerMask interactionLayer;
     [SerializeField] private InputActionReference interactionAction;
     [SerializeField] private Transform interactionOrigin;
+    [SerializeField] private float closeInteractionRadius = 1f;
 
     private IInteractable currentInteractable;
 
@@ -50,7 +51,17 @@ public class PlayerInteraction : MonoBehaviour
 
             float angle = Vector3.Angle(interactionOrigin.forward, directionToTarget);
 
-            if (angle <= interactionAngle * 0.5f && distance < closestDistance)
+            Vector3 horizontalDirection = collider.bounds.center - transform.position;
+
+            horizontalDirection.y = 0f;
+
+            float horizontalDistance = horizontalDirection.magnitude;
+
+            bool isCloseEnough = horizontalDistance <= horizontalDirection.magnitude;
+
+            bool isInsideAngle = angle <= interactionAngle * 0.5f;
+
+            if ((isCloseEnough || isInsideAngle) && distance < closestDistance)
             {
                 if (collider.TryGetComponent<IInteractable>(out IInteractable interactable))
                 {

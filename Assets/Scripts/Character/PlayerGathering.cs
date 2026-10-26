@@ -42,10 +42,19 @@ public class PlayerGathering: MonoBehaviour
 
             if (distance <= 0.001f)
             {
-                continue;
+                directionToTarget = collider.bounds.center - gatheringOrigin.position;
+
+                distance = directionToTarget.magnitude;
             }
 
-            directionToTarget.Normalize();
+            if (distance <= 0.001f)
+            {
+                directionToTarget = gatheringOrigin.forward;
+            }
+            else
+            {
+                directionToTarget.Normalize();
+            }
 
             float angle = Vector3.Angle(gatheringOrigin.forward, directionToTarget);
 
@@ -66,7 +75,6 @@ public class PlayerGathering: MonoBehaviour
     {
         if (currentResourceNode == null)
         {
-            Debug.Log("No resource node in range");
             return;
         }
 
@@ -74,7 +82,6 @@ public class PlayerGathering: MonoBehaviour
 
         if (equippedTool == null)
         {
-            Debug.Log("No tool eqipped");
             return;
         }
 
