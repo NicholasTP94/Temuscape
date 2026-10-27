@@ -4,6 +4,19 @@ public class PlayerCrafting: MonoBehaviour
 {
     [SerializeField] private PlayerInventory playerInventory;
 
+    [SerializeField] private PlayerEquipment playerEquipment;
+
+    [SerializeField] private CraftingRecipeDefinition[] handRecipes;
+
+    public CraftingRecipeDefinition[] HandRecipes => handRecipes;
+
+    private void Awake()
+    {
+        if (playerEquipment == null)
+        {
+
+        }playerEquipment = GetComponent<PlayerEquipment>();
+    }
     public bool CanCraft(CraftingRecipeDefinition recipe, CraftingStationType station)
     {
         if (recipe == null)
@@ -47,6 +60,11 @@ public class PlayerCrafting: MonoBehaviour
         }
 
         playerInventory.Inventory.AddItem(recipe.ResultItem, recipe.ResultQuantity);
+
+        if (recipe.ReplaceTool != null && recipe.ResultItem is ToolDefinition craftedTool)
+        {
+            playerEquipment.ReplaceTool(recipe.ReplaceTool, craftedTool);
+        }
 
         Debug.Log($"Crafted {recipe.ResultQuantity}x " + $"{recipe.ResultItem.DisplayName}");
 

@@ -10,21 +10,34 @@ public class PlayerEquipment:MonoBehaviour
     [SerializeField] private InputActionReference EquipTool2;
     [SerializeField] private InputActionReference EquipTool3;
 
+    [SerializeField] private PlayerInventory playerInventory;
+
     private ToolDefinition equippedTool;
 
     public ToolDefinition EquippedTool => equippedTool;
 
     private void Awake()
     {
+        if (playerInventory == null)
+        {
+            playerInventory = GetComponent<PlayerInventory>();
+        }
+    }
+
+    private void Start()
+    {
         if (availableTools == null || availableTools.Length == 0)
         {
-            Debug.LogWarning("No tools assigned");
+            Debug.LogWarning("No tools assigned to PlayerEquipment.");
+
             return;
         }
 
-        if (startinngToolIndex <0 || startinngToolIndex >= availableTools.Length)
+        if (startinngToolIndex < 0 || startinngToolIndex >= availableTools.Length)
         {
-            startinngToolIndex = 0;
+            Debug.LogWarning("Invalid starting tool index.");
+
+            return;
         }
 
         EquipTool(availableTools[startinngToolIndex]);
@@ -54,6 +67,13 @@ public class PlayerEquipment:MonoBehaviour
             return;
         }
 
+        if (!playerInventory.Inventory.HasItem(newTool, 1))
+        {
+            Debug.Log($"Cannot equip {newTool.DisplayName}. " + $"Tool is not in inventory.");
+
+            return;
+        }
+
         equippedTool = newTool;
 
         Debug.Log($"Equipped tool: {equippedTool.DisplayName}");
@@ -67,5 +87,30 @@ public class PlayerEquipment:MonoBehaviour
         }
 
         EquipTool(availableTools[index]);
+    }
+
+    public void ReplaceTool(ToolDefinition oldTool, ToolDefinition newTool)
+    {
+        if (oldTool == null || newTool == null)
+        {
+            return;
+        }
+
+        for (int i=0; i < availableTools.Length; i++)
+        {
+            if (availableTools[i] == oldTool)
+            {
+                availableTools[i] = newTool;
+
+                if (equippedTool == oldTool)
+                {
+                    EquipTool(newTool);
+                }
+
+                Debug.Log($"Replaced {oldTool.DisplayName} " + $"with {newTool.DisplayName}");
+
+                return;
+            }
+        }
     }
 }

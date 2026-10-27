@@ -11,6 +11,8 @@ public class CraftingRecipeDefinition: ScriptableObject
     [SerializeField] private ItemDefinition resultItem;
     [SerializeField] private int resultQuanity = 1;
 
+    [SerializeField] private ToolDefinition replaceTool;
+
     public string RecipeId => recipeId;
     public string DisplayName => displayName;
 
@@ -18,4 +20,6 @@ public class CraftingRecipeDefinition: ScriptableObject
     public Craftingngridient[] Ingredients => ingredients;
     public ItemDefinition ResultItem => resultItem;
     public int ResultQuantity => resultQuanity;
+
+    public ToolDefinition ReplaceTool => replaceTool;
 }

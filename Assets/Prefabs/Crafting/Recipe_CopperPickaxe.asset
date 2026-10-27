@@ -24,3 +24,4 @@ MonoBehaviour:
     quanity: 3
   resultItem: {fileID: 11400000, guid: b5e443d02a253774e8f565624602c1b0, type: 2}
   resultQuanity: 1
+  replaceTool: {fileID: 11400000, guid: 552f9d25ccf724d47b61c3123164e9dd, type: 2}

@@ -357,6 +357,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CraftingStation
   stationType: 2
+  availableRecipes:
+  - {fileID: 11400000, guid: a4372e8359ddcea409e28265c0fdd843, type: 2}
 --- !u!65 &1009391275846605623
 BoxCollider:
   m_ObjectHideFlags: 0
