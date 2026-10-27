@@ -4,16 +4,14 @@ public class PlayerCrafting: MonoBehaviour
 {
     [SerializeField] private PlayerInventory playerInventory;
 
-    private CraftingStationType currentStaton = CraftingStationType.Hand;
-
-    public bool CanCraft(CraftingRecipeDefinition recipe)
+    public bool CanCraft(CraftingRecipeDefinition recipe, CraftingStationType station)
     {
         if (recipe == null)
         {
             return false;
         }
-
-        if (recipe.RequiredStation != currentStaton)
+        
+        if (recipe.RequiredStation != station)
         {
             return false;
         }
@@ -34,9 +32,9 @@ public class PlayerCrafting: MonoBehaviour
         return true;
     }
 
-    public bool Craft(CraftingRecipeDefinition recipe)
+    public bool Craft(CraftingRecipeDefinition recipe, CraftingStationType station)
     {
-        if (!CanCraft(recipe))
+        if (!CanCraft(recipe, station))
         {
             Debug.Log($"Cannot craft {recipe.DisplayName}.");
 
