@@ -1,5 +1,4 @@
-﻿using Mono.Cecil;
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement: MonoBehaviour
 {
     [SerializeField] private float walkSpeed = 3f;
-    [SerializeField] private float runSpeed = 6f;
+    [SerializeField] private float runSpeed = 10f;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float jumpHeight = 1.5f;
@@ -22,6 +21,10 @@ public class PlayerMovement: MonoBehaviour
     [SerializeField] private InputActionReference jumpAction;
 
     [SerializeField] private CharacterController characterController;
+    [SerializeField] private Transform characterModel;
+
+    [SerializeField] private Transform cameraTransform;
+
     private Vector2 moveInput;
     private float verticalVelocity;
     private bool isRunning;
@@ -60,16 +63,33 @@ public class PlayerMovement: MonoBehaviour
             currentSpeed = walkSpeed;
         }
 
-            Vector3 moveDirections = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
+        Vector3 cameraForward = cameraTransform.forward;
+        Vector3 cameraRight = cameraTransform.right;
 
-        //ModelRotation
-        if (moveDirections != Vector3.zero)
+        cameraForward.y = 0f;
+        cameraRight.y = 0f;
+
+        cameraForward.Normalize();
+        cameraRight.Normalize();
+
+        Vector3 moveDirections = cameraForward * moveInput.y + cameraRight * moveInput.x;
+
+        //Rotate player
+        if (cameraForward.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
+
+        if (moveDirections.sqrMagnitude > 0.01f)
         {
             Quaternion modelRotation = Quaternion.LookRotation(moveDirections);
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, modelRotation, rotationSpeed*Time.deltaTime);
+            characterModel.rotation = Quaternion.Slerp(characterModel.rotation, modelRotation, rotationSpeed * Time.deltaTime);
         }
 
+        // Fix VerticalVelocity
         if (isGrounded && verticalVelocity < 0)
         {
             verticalVelocity = -2f;
