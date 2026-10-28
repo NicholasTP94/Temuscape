@@ -10,12 +10,14 @@ public class CraftingStation: MonoBehaviour, IInteractable
 
     public CraftingStationType StationType => stationType;
 
-    public CraftingRecipeDefinition[] AvailableRecpes => availableRecipes;
+    public CraftingRecipeDefinition[] AvailableRecipes => availableRecipes;
 
+    private CraftingUI craftingUI;
 
     private void Start()
     {
         playerCrafting = FindAnyObjectByType<PlayerCrafting>();
+        craftingUI = FindAnyObjectByType<CraftingUI>();
     }
     public string GetInteractionText()
     {
@@ -24,12 +26,14 @@ public class CraftingStation: MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        Debug.Log($"Opened {stationType}. " + $"{availableRecipes.Length} recipes available.");
-
-        foreach (CraftingRecipeDefinition recipe in availableRecipes)
+        if (craftingUI == null)
         {
-            Debug.Log($"- {recipe.DisplayName}");
+            Debug.LogWarning("CraftingUI not found");
+
+            return;
         }
+
+        craftingUI.OpenStation(this);
     }
 }
 

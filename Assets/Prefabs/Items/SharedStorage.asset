@@ -15,6 +15,6 @@ MonoBehaviour:
   itemId: shared_Storage
   displayName: Shared Storage
   description: A chest to keep your belonging as a team.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 0254a69474a66c64ab30c67d83e5fa86, type: 3}
   maxStack: 1
   itemType: 2

@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: basic_pickaxe
   displayName: Basic Pickaxe
   description: Starting pickaxe. Ideal for gathering Stone and Copper.
-  icon: {fileID: 0}
+  icon: {fileID: -1548098014, guid: a03e9228371be9449a97a937850924ca, type: 3}
   maxStack: 1
   itemType: 1
   toolType: 2

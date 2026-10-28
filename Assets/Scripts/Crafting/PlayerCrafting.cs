@@ -12,10 +12,15 @@ public class PlayerCrafting: MonoBehaviour
 
     private void Awake()
     {
+        if (playerInventory == null)
+        {
+            playerInventory = GetComponent<PlayerInventory>();
+        }
+
         if (playerEquipment == null)
         {
-
-        }playerEquipment = GetComponent<PlayerEquipment>();
+            playerEquipment = GetComponent<PlayerEquipment>();
+        }
     }
     public bool CanCraft(CraftingRecipeDefinition recipe, CraftingStationType station)
     {
@@ -47,6 +52,13 @@ public class PlayerCrafting: MonoBehaviour
 
     public bool Craft(CraftingRecipeDefinition recipe, CraftingStationType station)
     {
+        if (recipe == null)
+        {
+            Debug.LogWarning("Cannot craft because no recipe is selected.");
+
+            return false;
+        }
+
         if (!CanCraft(recipe, station))
         {
             Debug.Log($"Cannot craft {recipe.DisplayName}.");
@@ -63,7 +75,14 @@ public class PlayerCrafting: MonoBehaviour
 
         if (recipe.ReplaceTool != null && recipe.ResultItem is ToolDefinition craftedTool)
         {
-            playerEquipment.ReplaceTool(recipe.ReplaceTool, craftedTool);
+            if (playerEquipment != null)
+            {
+                playerEquipment.ReplaceTool(recipe.ReplaceTool, craftedTool);
+            }
+            else
+            {
+                Debug.LogWarning("PlayerEquipment reference is missing in PlayerCrafting.");
+            }
         }
 
         Debug.Log($"Crafted {recipe.ResultQuantity}x " + $"{recipe.ResultItem.DisplayName}");

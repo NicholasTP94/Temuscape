@@ -15,6 +15,6 @@ MonoBehaviour:
   itemId: workbench
   displayName: WorkBench
   description: The main crafting table for varius items.
-  icon: {fileID: 0}
+  icon: {fileID: 2103713151, guid: a03e9228371be9449a97a937850924ca, type: 3}
   maxStack: 1
   itemType: 2

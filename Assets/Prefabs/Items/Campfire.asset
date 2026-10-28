@@ -15,6 +15,6 @@ MonoBehaviour:
   itemId: campfire
   displayName: Campfire
   description: Great for keeping you warm and a good place to save your game.
-  icon: {fileID: 0}
+  icon: {fileID: 204176739, guid: a03e9228371be9449a97a937850924ca, type: 3}
   maxStack: 1
   itemType: 2

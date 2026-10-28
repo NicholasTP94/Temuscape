@@ -15,6 +15,6 @@ MonoBehaviour:
   itemId: copperIngot
   displayName: Copper Ingot
   description: The result of smelted copper
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 453154624a2a1884586c169a3021da3a, type: 3}
   maxStack: 5
   itemType: 0

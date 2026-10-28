@@ -15,6 +15,6 @@ MonoBehaviour:
   itemId: smelter
   displayName: Smelter
   description: A place to smelt your Ores.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 1c7a80e10e35bfc43ae3581dea0ce3cb, type: 3}
   maxStack: 1
   itemType: 2

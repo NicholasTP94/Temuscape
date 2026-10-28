@@ -10,15 +10,23 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private Transform interactionOrigin;
     [SerializeField] private float closeInteractionRadius = 1f;
 
+    [SerializeField] private InteractionPromptUI interactionPromptUI;
+
     private IInteractable currentInteractable;
+
+    private void Awake()
+    {
+        if (interactionPromptUI == null)
+        {
+            interactionPromptUI = FindAnyObjectByType<InteractionPromptUI>();
+        }
+    }
 
     private void Update()
     {
         FindInteractable();
 
-        if (
-            interactionAction.action.WasPressedThisFrame() && currentInteractable != null
-        )
+        if (interactionAction.action.WasPressedThisFrame() && currentInteractable != null)
         {
             currentInteractable.Interact();
         }
@@ -71,9 +79,13 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
 
+        IInteractable previous = currentInteractable;
+
         currentInteractable = bestInteractable;
 
-        LogTargetChange(previusInteractable, currentInteractable);
+        LogTargetChange(previous, currentInteractable);
+
+        UpdateInteractionPrompt(previous, currentInteractable);
     }
 
     private void LogTargetChange(IInteractable previousInteractable, IInteractable newInteractable)
@@ -108,5 +120,28 @@ public class PlayerInteraction : MonoBehaviour
         Gizmos.DrawLine(interactionOrigin.position, interactionOrigin.position + rightBoundary * interactionDistance);
 
         Gizmos.DrawWireSphere(interactionOrigin.position, interactionDistance);
+    }
+
+    private void UpdateInteractionPrompt(IInteractable previous, IInteractable current)
+    {
+        if (interactionPromptUI == null)
+        {
+            return;
+        }
+
+        if (previous == current)
+        {
+            return;
+        }
+
+        if (current == null)
+        {
+            interactionPromptUI.HidePrompt();
+            return;
+        }
+
+        MonoBehaviour interactableBehaviour = current as MonoBehaviour;
+
+        interactionPromptUI.ShowPrompt(interactableBehaviour.transform, current.GetInteractionText());
     }
 }

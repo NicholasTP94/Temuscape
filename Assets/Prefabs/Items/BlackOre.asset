@@ -15,6 +15,6 @@ MonoBehaviour:
   itemId: black_ore
   displayName: Black ore
   description: Advanced resource. Can be found in the deepest part of a caves.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: bd17825491ad5864280cf57937f2b808, type: 3}
   maxStack: 5
   itemType: 0

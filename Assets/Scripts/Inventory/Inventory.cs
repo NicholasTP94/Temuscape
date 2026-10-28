@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 public class Inventory
 {
     private readonly List<InventorySlot> slots;
     private const int DefaultCapacity = 16;
 
     public IReadOnlyList<InventorySlot> Slots => slots;
+
+    public event Action InventoryChanged;
 
     public Inventory()
     {
@@ -106,6 +109,11 @@ public class Inventory
 
         int addedQuantity = quantity - remainingQuantity;
 
+        if (addedQuantity > 0)
+        {
+            InventoryChanged?.Invoke();
+        }
+
         return addedQuantity;
     }
 
@@ -163,6 +171,7 @@ public class Inventory
 
             if (remainingQuantity <= 0)
             {
+                InventoryChanged?.Invoke();
                 return true;
             }
         }

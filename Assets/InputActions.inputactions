@@ -70,9 +70,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "EquipTool3",
+                    "name": "OpenCrafting",
                     "type": "Button",
-                    "id": "32955f6c-12b6-4d36-a106-c29c5e89c38d",
+                    "id": "113bdf07-f946-4316-82c4-6ca37a57c650",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "OpenInventory",
+                    "type": "Button",
+                    "id": "faeed4c9-f650-4804-bc07-2a141dffd7ec",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -214,12 +223,23 @@
                 },
                 {
                     "name": "",
-                    "id": "e1e60a82-84ed-4129-a767-7d194184c3cf",
-                    "path": "<Keyboard>/3",
+                    "id": "dae86440-6cbb-4820-a70c-84c49a8273fc",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "EquipTool3",
+                    "action": "OpenCrafting",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "822f6541-f265-41b8-9a4f-28fb016a634b",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenInventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

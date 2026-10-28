@@ -15,6 +15,6 @@ MonoBehaviour:
   itemId: torch
   displayName: Torch
   description: Helps you to see at dark areas.
-  icon: {fileID: 0}
+  icon: {fileID: 988306102, guid: a03e9228371be9449a97a937850924ca, type: 3}
   maxStack: 5
   itemType: 3

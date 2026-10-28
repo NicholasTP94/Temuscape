@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class PlayerEquipment:MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class PlayerEquipment:MonoBehaviour
     [SerializeField] private PlayerInventory playerInventory;
 
     private ToolDefinition equippedTool;
+
+    public event Action<ToolDefinition> EquippedToolChanged;
 
     public ToolDefinition EquippedTool => equippedTool;
 
@@ -54,11 +57,6 @@ public class PlayerEquipment:MonoBehaviour
         {
             EquipToolByIndex(1);
         }
-
-        if (EquipTool3.action.WasPressedThisFrame())
-        {
-            EquipToolByIndex(2);
-        }
     }
     public void EquipTool(ToolDefinition newTool)
     {
@@ -75,6 +73,8 @@ public class PlayerEquipment:MonoBehaviour
         }
 
         equippedTool = newTool;
+
+        EquippedToolChanged?.Invoke(equippedTool);
 
         Debug.Log($"Equipped tool: {equippedTool.DisplayName}");
     }

@@ -15,6 +15,6 @@ MonoBehaviour:
   itemId: stone
   displayName: Stone
   description: Basic resource. Can be found in forests and open fields.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4fbc211cc2acbde409318a8ddad95353, type: 3}
   maxStack: 5
   itemType: 0
