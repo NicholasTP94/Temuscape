@@ -18,6 +18,8 @@ public class InventoryUI: MonoBehaviour
 
     [SerializeField] private InputControllerUI inputControllerUI;
 
+    [SerializeField] private PlayerPlacement playerPlacement;
+
     private GameObject[] slotObjects;
 
     private const int slotCount = 16;
@@ -27,6 +29,11 @@ public class InventoryUI: MonoBehaviour
         if (playerInventory == null)
         {
             playerInventory = FindAnyObjectByType<PlayerInventory>();
+        }
+
+        if (playerPlacement == null)
+        {
+            playerPlacement = FindAnyObjectByType<PlayerPlacement>();
         }
 
         CreateSlots();
@@ -74,6 +81,10 @@ public class InventoryUI: MonoBehaviour
 
             GameObject uiSlot = slotObjects[i];
 
+            Button slotButton = uiSlot.GetComponent<Button>();
+
+            slotButton.onClick.RemoveAllListeners();
+
             Image itemIcon = uiSlot.transform.Find("ItemIcon").GetComponent<Image>();
             
             TMP_Text quantityText = uiSlot.transform.Find("QuantityText").GetComponent<TMP_Text>();
@@ -92,6 +103,10 @@ public class InventoryUI: MonoBehaviour
                 itemIcon.enabled = true;
 
                 quantityText.text = inventorySlot.Quantity.ToString();
+
+                ItemDefinition item = inventorySlot.Item;
+
+                slotButton.onClick.AddListener(() => OnSlotClicked(item));
             }
         }
     }
@@ -120,5 +135,19 @@ public class InventoryUI: MonoBehaviour
         {
             inputControllerUI.LockedCursor();
         }
+    }
+
+    private void OnSlotClicked(ItemDefinition item)
+    {
+        if (item is not DeployableDefinition deployable)
+        {
+            return;
+        }
+
+        playerPlacement.StartPlacement(deployable);
+
+        inventoryPanel.SetActive(false);
+
+        inputControllerUI.LockedCursor();
     }
 }

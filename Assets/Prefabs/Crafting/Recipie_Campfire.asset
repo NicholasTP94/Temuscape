@@ -20,5 +20,6 @@ MonoBehaviour:
     quanity: 4
   - item: {fileID: 11400000, guid: 64a2c90e59eb12a4ebae5f39cdc3f3aa, type: 2}
     quanity: 4
-  resultItem: {fileID: 11400000, guid: e2d626ab5bbfa894db51944641f44cf9, type: 2}
+  resultItem: {fileID: 11400000, guid: 47992f2589fc2ce4284f47772756e2e6, type: 2}
   resultQuanity: 1
+  replaceTool: {fileID: 0}

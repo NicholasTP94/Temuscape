@@ -47,7 +47,7 @@ public class InventorySlot
 
         quantity -= ammount;
 
-        if (ammount <= 0)
+        if (quantity <= 0)
         {
             Clear();
         }

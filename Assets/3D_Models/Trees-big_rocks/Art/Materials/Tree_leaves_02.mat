@@ -29,7 +29,7 @@ Material:
   - _RECEIVE_SHADOWS_OFF
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2450
   stringTagMap:
@@ -164,8 +164,8 @@ Material:
     - _test2: 1.47
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.21306516, g: 0.7169812, b: 0.38421515, a: 0.8666667}
-    - _EmissionColor: {r: 0.48751462, g: 0.6792453, b: 0.47098613, a: 1}
+    - _Color: {r: 0.17475079, g: 0.4811321, b: 0.25211984, a: 0.8666667}
+    - _EmissionColor: {r: 0.25882354, g: 0.5882353, b: 0.23137255, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

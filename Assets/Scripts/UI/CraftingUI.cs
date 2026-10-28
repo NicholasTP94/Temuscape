@@ -208,7 +208,7 @@ public class CraftingUI: MonoBehaviour
             stationType = CraftingStationType.Hand;
         }
 
-            bool crafted = playerCrafting.Craft(selectedRecipe, currentStation.StationType);
+            bool crafted = playerCrafting.Craft(selectedRecipe, stationType);
 
         if (!crafted)
         {
@@ -217,7 +217,7 @@ public class CraftingUI: MonoBehaviour
 
         PopulateIngredients(selectedRecipe);
 
-        craftButton.interactable = playerCrafting.CanCraft(selectedRecipe, currentStation.StationType);
+        craftButton.interactable = playerCrafting.CanCraft(selectedRecipe, stationType);
     }
 
     public void OpenHandCrafting()
