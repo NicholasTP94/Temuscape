@@ -28,6 +28,8 @@ public class CraftingUI: MonoBehaviour
     [SerializeField] private PlayerCrafting playerCrafting;
     [SerializeField] private InputActionReference openCraftingPanel;
 
+    [SerializeField] private InputControllerUI inputControllerUI;
+
     private CraftingRecipeDefinition selectedRecipe;
     private CraftingStation currentStation;
 
@@ -84,11 +86,16 @@ public class CraftingUI: MonoBehaviour
         PopulateRecippeList(station.AvailableRecipes);
 
         Debug.Log($"Opened crafting UI for {station.StationType}");
+
+        inputControllerUI.UnlockedCursor();
     }
 
     public void CloseCrafting()
     {
         craftingPanel.SetActive(false);
+
+        inputControllerUI.LockedCursor();
+
     }
 
     public void PopulateRecippeList(CraftingRecipeDefinition[] recipes)
@@ -230,5 +237,7 @@ public class CraftingUI: MonoBehaviour
         craftButton.interactable = false;
 
         PopulateRecippeList(playerCrafting.HandRecipes);
+
+        inputControllerUI.UnlockedCursor();
     }
 }

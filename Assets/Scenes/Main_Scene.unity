@@ -1615,11 +1615,11 @@ MonoBehaviour:
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: 6c51c16316672f84e9cd1b3b72061b8e, type: 3}
-  m_PointAction: {fileID: 0}
+  m_PointAction: {fileID: -1043379194046044415, guid: 6c51c16316672f84e9cd1b3b72061b8e, type: 3}
   m_MoveAction: {fileID: 0}
   m_SubmitAction: {fileID: 0}
   m_CancelAction: {fileID: 0}
-  m_LeftClickAction: {fileID: 0}
+  m_LeftClickAction: {fileID: 9080549600812334240, guid: 6c51c16316672f84e9cd1b3b72061b8e, type: 3}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}
   m_ScrollWheelAction: {fileID: 0}
@@ -2572,6 +2572,7 @@ GameObject:
   - component: {fileID: 1579277411}
   - component: {fileID: 1579277416}
   - component: {fileID: 1579277417}
+  - component: {fileID: 1579277418}
   m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
@@ -2603,6 +2604,7 @@ MonoBehaviour:
   playerInventory: {fileID: 448081694}
   playerCrafting: {fileID: 448081697}
   openCraftingPanel: {fileID: -6793673200660601808, guid: 6c51c16316672f84e9cd1b3b72061b8e, type: 3}
+  inputControllerUI: {fileID: 1579277418}
 --- !u!114 &1579277412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2706,6 +2708,7 @@ MonoBehaviour:
   playerInventory: {fileID: 448081694}
   inventoryPanel: {fileID: 1718890493}
   openInventoryAction: {fileID: -4322057250754213781, guid: 6c51c16316672f84e9cd1b3b72061b8e, type: 3}
+  inputControllerUI: {fileID: 1579277418}
 --- !u!114 &1579277417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2721,6 +2724,18 @@ MonoBehaviour:
   playerEquipment: {fileID: 448081696}
   toolIcon: {fileID: 861609248}
   toolNameText: {fileID: 1066359120}
+--- !u!114 &1579277418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579277410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d08101059730c43bf96f06ee1bf5cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputControllerUI
 --- !u!1001 &1621910251
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3261,6 +3276,7 @@ MonoBehaviour:
   collisionOffset: 0.1
   minPitch: -30
   maxPitch: 70
+  inputControllerUI: {fileID: 1579277418}
 --- !u!1001 &1728988551
 PrefabInstance:
   m_ObjectHideFlags: 0

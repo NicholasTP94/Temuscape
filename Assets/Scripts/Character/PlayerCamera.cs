@@ -25,6 +25,9 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float minPitch = -30f;
     [SerializeField] private float maxPitch = 70f;
 
+    [SerializeField] private InputControllerUI inputControllerUI;
+
+
     private float yaw;
     private float pitch;
     private float targetDistance;
@@ -49,9 +52,15 @@ public class PlayerCamera : MonoBehaviour
             return;
         }
 
-        Vector2 lookInput = cameraLookAction.action.ReadValue<Vector2>();
+        Vector2 lookInput = Vector2.zero;
+        Vector2 zoomInput = Vector2.zero;
 
-        Vector2 zoomInput = cameraZoomAction.action.ReadValue<Vector2>();
+        if (inputControllerUI == null || !inputControllerUI.IsUIOpen)
+        {
+            lookInput = cameraLookAction.action.ReadValue<Vector2>();
+
+            zoomInput = cameraZoomAction.action.ReadValue<Vector2>();
+        }
 
         targetDistance -= zoomInput.y * zoomSpeed * 0.01f;
 

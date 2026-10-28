@@ -16,6 +16,8 @@ public class InventoryUI: MonoBehaviour
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private InputActionReference openInventoryAction;
 
+    [SerializeField] private InputControllerUI inputControllerUI;
+
     private GameObject[] slotObjects;
 
     private const int slotCount = 16;
@@ -104,13 +106,19 @@ public class InventoryUI: MonoBehaviour
 
     private void ToggleInventory()
     {
-        bool isOpen = inventoryPanel.activeSelf;
+        bool shouldOpen = !inventoryPanel.activeSelf;
 
-        inventoryPanel.SetActive(!isOpen);
+        inventoryPanel.SetActive(shouldOpen);
 
-        if (!isOpen)
+        if (shouldOpen)
         {
             RefreshInventory();
+
+            inputControllerUI.UnlockedCursor();
+        }
+        else
+        {
+            inputControllerUI.LockedCursor();
         }
     }
 }
