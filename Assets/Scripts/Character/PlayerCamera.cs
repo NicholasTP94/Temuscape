@@ -21,6 +21,8 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private LayerMask collisionMask;
     [SerializeField] private float collisionRadius = 0.2f;
     [SerializeField] private float collisionOffset = 0.1f;
+    [SerializeField] private LayerMask groundMask;
+    [SerializeField] private float groundClearance = 0.3f;
 
     [SerializeField] private float minPitch = -30f;
     [SerializeField] private float maxPitch = 70f;
@@ -85,13 +87,31 @@ public class PlayerCamera : MonoBehaviour
 
         float desiredDistance = directionToCamera.magnitude;
 
-        if (Physics.SphereCast(targetPosition, collisionRadius, directionToCamera,
-            out RaycastHit hit, desiredDistance, collisionMask, QueryTriggerInteraction.Ignore))
+        if (desiredDistance > 0.001f)
         {
-            desiredPosition = targetPosition + directionToCamera * Mathf.Max(hit.distance - collisionOffset, 0f);
+            if (Physics.SphereCast(targetPosition, collisionRadius, directionToCamera,
+            out RaycastHit hit, desiredDistance, collisionMask, QueryTriggerInteraction.Ignore))
+            {
+                desiredPosition = targetPosition + directionToCamera * Mathf.Max(hit.distance - collisionOffset, 0f);
+            }
         }
 
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, followSmoothSpeed * Time.deltaTime);
+        Vector3 finalPosition = Vector3.Lerp(transform.position, desiredPosition, followSmoothSpeed * Time.deltaTime);
+
+        Vector3 groundCheckStart = finalPosition + Vector3.up * 5f;
+
+        if (Physics.Raycast(groundCheckStart, Vector3.down,
+        out RaycastHit groundHit,10f, groundMask, QueryTriggerInteraction.Ignore))
+        {
+            float minimumCameraHeight = groundHit.point.y + groundClearance;
+
+            if (finalPosition.y < minimumCameraHeight)
+            {
+                finalPosition.y = minimumCameraHeight;
+            }
+        }
+
+        transform.position = finalPosition;
 
         transform.LookAt(targetPosition);
     }

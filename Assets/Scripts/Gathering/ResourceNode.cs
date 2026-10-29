@@ -60,25 +60,33 @@ public class ResourceNode: MonoBehaviour
 
     public void Hit(ToolDefinition tool)
     {
-        if (tool == null)
+        if (!CanGatherWith(tool))
         {
-            return;
-        }
-
-        if (tool.ToolType != definition.RequieredToolType)
-        {
-            Debug.Log($"{tool.DisplayName} cannot gather " + $"{definition.DisplayName}. Wrong tool type.");
-
-            return;
-        }
-
-        if (tool.ToolTier < definition.RequieredToolTier)
-        {
-            Debug.Log($"{tool.DisplayName} is not high enough tier " + $"for {definition.DisplayName}.");
+            Debug.Log($"{tool?.DisplayName} cannot gather {definition.DisplayName}.");
 
             return;
         }
 
         TakeDamage(tool.Damage);
+    }
+
+    public bool CanGatherWith(ToolDefinition tool)
+    {
+        if (tool == null)
+        {
+            return false;
+        }
+
+        if (tool.ToolType != definition.RequieredToolType)
+        {
+            return false;
+        }
+
+        if (tool.ToolTier < definition.RequieredToolTier)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

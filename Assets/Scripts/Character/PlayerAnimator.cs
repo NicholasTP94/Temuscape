@@ -5,12 +5,18 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private PlayerGathering playerGathering;
 
     private Animator animator;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+
+        if (playerGathering == null)
+        {
+            playerGathering = GetComponentInParent<PlayerGathering>();
+        }
     }
     private void OnEnable()
     {
@@ -41,5 +47,25 @@ public class PlayerAnimator : MonoBehaviour
     private void HandleJumped()
     {
         animator.SetTrigger("Jump");
+    }
+
+    public void PlayMining()
+    {
+        animator.SetTrigger("Mining");
+    }
+
+    public void SetInteraction(bool isInteracting)
+    {
+        animator.SetBool("Interaction", isInteracting);
+    }
+
+    public void AnimationGatherHit()
+    {
+        playerGathering.PerformGatherHit();
+    }
+
+    public void AnimationGatherFinished()
+    {
+        playerGathering.FinishGathering();
     }
 }

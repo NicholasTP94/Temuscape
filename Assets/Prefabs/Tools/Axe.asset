@@ -21,3 +21,5 @@ MonoBehaviour:
   toolType: 1
   toolTier: 1
   damage: 25
+  heldPrefab: {fileID: 1878273237308662, guid: 0031543705b8c024c916caa648809017, type: 3}
+  heldMaterialOverride: {fileID: 0}

@@ -27,6 +27,7 @@ public class CraftingUI: MonoBehaviour
     [SerializeField] private PlayerInventory playerInventory;
     [SerializeField] private PlayerCrafting playerCrafting;
     [SerializeField] private InputActionReference openCraftingPanel;
+    [SerializeField] private PlayerAnimator playerAnimator;
 
     [SerializeField] private InputControllerUI inputControllerUI;
 
@@ -43,6 +44,12 @@ public class CraftingUI: MonoBehaviour
         if (playerCrafting == null)
         {
             playerCrafting = FindAnyObjectByType<PlayerCrafting>();
+        }
+
+        if (playerAnimator == null)
+        {
+            playerAnimator =
+                FindAnyObjectByType<PlayerAnimator>();
         }
 
         craftingPanel.SetActive(false);
@@ -88,6 +95,8 @@ public class CraftingUI: MonoBehaviour
         Debug.Log($"Opened crafting UI for {station.StationType}");
 
         inputControllerUI.UnlockedCursor();
+
+        playerAnimator.SetInteraction(true);
     }
 
     public void CloseCrafting()
@@ -96,6 +105,7 @@ public class CraftingUI: MonoBehaviour
 
         inputControllerUI.LockedCursor();
 
+        playerAnimator.SetInteraction(false);
     }
 
     public void PopulateRecippeList(CraftingRecipeDefinition[] recipes)
@@ -239,5 +249,7 @@ public class CraftingUI: MonoBehaviour
         PopulateRecippeList(playerCrafting.HandRecipes);
 
         inputControllerUI.UnlockedCursor();
+
+        playerAnimator.SetInteraction(true);
     }
 }

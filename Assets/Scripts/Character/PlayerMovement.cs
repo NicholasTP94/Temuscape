@@ -25,6 +25,8 @@ public class PlayerMovement: MonoBehaviour
 
     [SerializeField] private Transform cameraTransform;
 
+    [SerializeField] private InputControllerUI inputControllerUI;
+
     private Vector2 moveInput;
     private float verticalVelocity;
     private bool isRunning;
@@ -48,9 +50,18 @@ public class PlayerMovement: MonoBehaviour
         //GroundCheck
         isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
 
-        //Movement
-        moveInput = moveAction.action.ReadValue<Vector2>();
-        isRunning = runAction.action.IsPressed();
+        //Movement & stop while interacting
+        if (inputControllerUI != null && inputControllerUI.IsUIOpen)
+        {
+            moveInput = Vector2.zero;
+            isRunning = false;
+        }
+        else
+        {
+            moveInput = moveAction.action.ReadValue<Vector2>();
+
+            isRunning = runAction.action.IsPressed();
+        }
 
         float currentSpeed;
 
@@ -74,15 +85,15 @@ public class PlayerMovement: MonoBehaviour
 
         Vector3 moveDirections = cameraForward * moveInput.y + cameraRight * moveInput.x;
 
-        //Rotate player
-        if (cameraForward.sqrMagnitude > 0.01f)
+        //Rotate player & stop while interacting
+        if ((inputControllerUI == null || !inputControllerUI.IsUIOpen) && cameraForward.sqrMagnitude > 0.01f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
 
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        if (moveDirections.sqrMagnitude > 0.01f)
+        if ((inputControllerUI == null || !inputControllerUI.IsUIOpen) && moveDirections.sqrMagnitude > 0.01f)
         {
             Quaternion modelRotation = Quaternion.LookRotation(moveDirections);
 
@@ -95,7 +106,8 @@ public class PlayerMovement: MonoBehaviour
             verticalVelocity = -2f;
         }
 
-        if (isGrounded && jumpAction.action.WasPressedThisFrame())
+        // Jump & stop while interacting
+        if ((inputControllerUI == null || !inputControllerUI.IsUIOpen) && isGrounded && jumpAction.action.WasPressedThisFrame())
         {
             verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
 

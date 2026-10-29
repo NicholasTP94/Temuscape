@@ -13,7 +13,28 @@ public class PlayerGathering: MonoBehaviour
     [SerializeField] private InputActionReference gatherAction;
     [SerializeField] private float gatheringAngle = 90f;
 
+    [SerializeField] private PlayerAnimator playerAnimator;
+
+    [SerializeField] private GatherFeedbackUI gatherFeedbackUI;
+
     private ResourceNode currentResourceNode;
+
+    private bool isGathering;
+    private ResourceNode pendingResource;
+    private ToolDefinition pendingTool;
+
+    private void Awake()
+    {
+        if (gatherFeedbackUI == null)
+        {
+            gatherFeedbackUI = FindAnyObjectByType<GatherFeedbackUI>();
+        }
+
+        if (playerAnimator == null)
+        {
+            playerAnimator = GetComponentInChildren<PlayerAnimator>();
+        }
+    }
 
     private void Update()
     {
@@ -73,6 +94,11 @@ public class PlayerGathering: MonoBehaviour
 
     private void TryGather()
     {
+        if (isGathering)
+        {
+            return;
+        }
+
         if (currentResourceNode == null)
         {
             return;
@@ -85,6 +111,41 @@ public class PlayerGathering: MonoBehaviour
             return;
         }
 
-        currentResourceNode.Hit(equippedTool);
+        if (!currentResourceNode.CanGatherWith(equippedTool))
+        {
+            gatherFeedbackUI.ShowWrongTool(currentResourceNode.transform);
+
+            return;
+        }
+
+        isGathering = true;
+
+        pendingResource = currentResourceNode;
+        pendingTool = equippedTool;
+
+        playerAnimator.PlayMining();
+    }
+
+    public void PerformGatherHit()
+    {
+        if (!isGathering)
+        {
+            return;
+        }
+
+        if (pendingResource == null || pendingTool == null)
+        {
+            return;
+        }
+
+        pendingResource.Hit(pendingTool);
+    }
+
+    public void FinishGathering()
+    {
+        isGathering = false;
+
+        pendingResource = null;
+        pendingTool = null;
     }
 }

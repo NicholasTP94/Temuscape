@@ -20,6 +20,8 @@ public class InventoryUI: MonoBehaviour
 
     [SerializeField] private PlayerPlacement playerPlacement;
 
+    [SerializeField] private PlayerAnimator playerAnimator;
+
     private GameObject[] slotObjects;
 
     private const int slotCount = 16;
@@ -34,6 +36,11 @@ public class InventoryUI: MonoBehaviour
         if (playerPlacement == null)
         {
             playerPlacement = FindAnyObjectByType<PlayerPlacement>();
+        }
+
+        if (playerAnimator == null)
+        {
+            playerAnimator = FindAnyObjectByType<PlayerAnimator>();
         }
 
         CreateSlots();
@@ -130,10 +137,14 @@ public class InventoryUI: MonoBehaviour
             RefreshInventory();
 
             inputControllerUI.UnlockedCursor();
+
+            playerAnimator.SetInteraction(true);
         }
         else
         {
             inputControllerUI.LockedCursor();
+
+            playerAnimator.SetInteraction(false);
         }
     }
 

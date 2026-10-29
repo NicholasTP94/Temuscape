@@ -70,6 +70,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "EquipTool3",
+                    "type": "Button",
+                    "id": "28044dd9-0200-41e1-b11f-fe00e4c31c2e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "OpenCrafting",
                     "type": "Button",
                     "id": "113bdf07-f946-4316-82c4-6ca37a57c650",
@@ -254,6 +263,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "EquipTool2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "615b1c07-dfd0-4995-919d-f812cbb90f7c",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EquipTool3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

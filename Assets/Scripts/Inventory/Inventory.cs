@@ -10,11 +10,11 @@ public class Inventory
 
     public event Action InventoryChanged;
 
-    public Inventory()
+    public Inventory(int capacity = DefaultCapacity)
     {
         slots = new List<InventorySlot>();
 
-        for (int i =0; i< DefaultCapacity; i++)
+        for (int i =0; i< capacity; i++)
         {
             slots.Add(new InventorySlot());
         }
