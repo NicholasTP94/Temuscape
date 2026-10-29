@@ -1,6 +1,7 @@
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class StorageUI: MonoBehaviour
 {
@@ -19,14 +20,13 @@ public class StorageUI: MonoBehaviour
     private SharedStorage currentStorage;
     private GameObject[] storageSlotObjects;
 
+    public SharedStorage CurrentStorage => currentStorage;
+    public bool IsStorageOpen => storagePanel.activeSelf && currentStorage != null;
+
+
     private void Awake()
     {
         storagePanel.SetActive(false);
-
-        if (closeButton != null)
-        {
-            closeButton.onClick.AddListener(CloseStorage);
-        }
 
         CreateStorageSlots();
     }
@@ -80,6 +80,10 @@ public class StorageUI: MonoBehaviour
 
             GameObject uiSlot = storageSlotObjects[i];
 
+            Button slotButton = uiSlot.GetComponent<Button>();
+
+            slotButton.onClick.RemoveAllListeners();
+
             Image itemIcon = uiSlot.transform.Find("ItemIcon").GetComponent<Image>();
 
             TMP_Text quantityText = uiSlot.transform.Find("QuantityText").GetComponent<TMP_Text>();
@@ -98,6 +102,10 @@ public class StorageUI: MonoBehaviour
                 itemIcon.enabled = true;
 
                 quantityText.text = storageSlot.Quantity.ToString();
+
+                ItemDefinition item = storageSlot.Item;
+
+                slotButton.onClick.AddListener(() => OnStorageSlotClicked(item));
             }
         }
     }
@@ -110,5 +118,129 @@ public class StorageUI: MonoBehaviour
         {
             storageSlotObjects[i] = Instantiate(inventorySlotPrefab, storageGrid);
         }
+    }
+
+    public void MoveItemToStorage(ItemDefinition item)
+    {
+        if (currentStorage == null || item == null)
+        {
+            return;
+        }
+
+        if (!currentStorage.StorageInventory.CanAddItem(item, 1))
+        {
+            return;
+        }
+
+        bool removed = playerInventory.Inventory.RemoveItem(item, 1);
+
+        if (!removed)
+        {
+            return;
+        }
+
+        currentStorage.StorageInventory.AddItem(item, 1);
+
+        RefreshStorageInventory();
+    }
+
+    private void MoveItemToPlayer(ItemDefinition item)
+    {
+        if (currentStorage == null || item == null)
+        {
+            return;
+        }
+
+        if (!playerInventory.Inventory.CanAddItem(item, 1))
+        {
+            return;
+        }
+
+        bool removed = currentStorage.StorageInventory.RemoveItem(item, 1);
+
+        if (!removed)
+        {
+            return;
+        }
+
+        playerInventory.Inventory.AddItem(item, 1);
+
+        RefreshStorageInventory();
+    }
+
+    public void MoveStackToStorage(ItemDefinition item)
+    {
+        if (currentStorage == null || item == null)
+        {
+            return;
+        }
+
+        int quantity = playerInventory.Inventory.GetItemQuantity(item);
+
+        if (quantity <= 0)
+        {
+            return;
+        }
+
+        if (!currentStorage.StorageInventory.CanAddItem(item, quantity))
+        {
+            return;
+        }
+
+        bool removed = playerInventory.Inventory.RemoveItem(item, quantity);
+
+        if (!removed)
+        {
+            return;
+        }
+
+        currentStorage.StorageInventory.AddItem(item, quantity);
+
+        RefreshStorageInventory();
+    }
+
+    private void OnStorageSlotClicked(ItemDefinition item)
+    {
+        if (Keyboard.current.leftShiftKey.isPressed ||
+            Keyboard.current.rightShiftKey.isPressed)
+        {
+            MoveStackToPlayer(item);
+        }
+        else
+        {
+            MoveItemToPlayer(item);
+        }
+    }
+
+    private void MoveStackToPlayer(ItemDefinition item)
+    {
+        if (currentStorage == null || item == null)
+        {
+            return;
+        }
+
+        int quantity =
+            currentStorage.StorageInventory.GetItemQuantity(item);
+
+        if (quantity <= 0)
+        {
+            return;
+        }
+
+        if (!playerInventory.Inventory.CanAddItem(item, quantity))
+        {
+            return;
+        }
+
+        bool removed = currentStorage.StorageInventory.RemoveItem(item, quantity);
+
+        if (!removed)
+        {
+            return;
+        }
+
+        playerInventory.Inventory.AddItem(item, quantity);
+
+        RefreshStorageInventory();
     }
 }

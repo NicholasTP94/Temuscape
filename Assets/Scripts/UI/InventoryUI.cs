@@ -12,15 +12,14 @@ public class InventoryUI: MonoBehaviour
     [SerializeField] private GameObject inventorySlotPrefab;
 
     [SerializeField] private PlayerInventory playerInventory;
+    [SerializeField] private PlayerPlacement playerPlacement;
+    [SerializeField] private PlayerAnimator playerAnimator;
 
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private InputActionReference openInventoryAction;
 
     [SerializeField] private InputControllerUI inputControllerUI;
-
-    [SerializeField] private PlayerPlacement playerPlacement;
-
-    [SerializeField] private PlayerAnimator playerAnimator;
+    [SerializeField] private StorageUI storageUI;
 
     private GameObject[] slotObjects;
 
@@ -43,6 +42,11 @@ public class InventoryUI: MonoBehaviour
             playerAnimator = FindAnyObjectByType<PlayerAnimator>();
         }
 
+        if (storageUI == null)
+        {
+            storageUI = FindAnyObjectByType<StorageUI>();
+        }
+
         CreateSlots();
 
         playerInventory.Inventory.InventoryChanged += RefreshInventory;
@@ -56,7 +60,21 @@ public class InventoryUI: MonoBehaviour
     {
         if (openInventoryAction.action.WasPressedThisFrame())
         {
+            if (storageUI != null && storageUI.IsStorageOpen)
+            {
+                storageUI.CloseStorage();
+                return;
+            }
+
             ToggleInventory();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (playerInventory != null && playerInventory.Inventory != null)
+        {
+            playerInventory.Inventory.InventoryChanged -= RefreshInventory;
         }
     }
 
@@ -118,14 +136,6 @@ public class InventoryUI: MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        if (playerInventory != null && playerInventory.Inventory != null)
-        {
-            playerInventory.Inventory.InventoryChanged -= RefreshInventory;
-        }
-    }
-
     private void ToggleInventory()
     {
         bool shouldOpen = !inventoryPanel.activeSelf;
@@ -150,6 +160,28 @@ public class InventoryUI: MonoBehaviour
 
     private void OnSlotClicked(ItemDefinition item)
     {
+        if (item == null)
+        {
+            return;
+        }
+
+        // If storage is open, move item to storage
+        if (storageUI != null && storageUI.IsStorageOpen)
+        {
+            if (Keyboard.current.leftShiftKey.isPressed ||
+       Keyboard.current.rightShiftKey.isPressed)
+            {
+                storageUI.MoveStackToStorage(item);
+            }
+            else
+            {
+                storageUI.MoveItemToStorage(item);
+            }
+
+            return;
+        }
+
+        // Otherwise normal deployable behaviour
         if (item is not DeployableDefinition deployable)
         {
             return;
