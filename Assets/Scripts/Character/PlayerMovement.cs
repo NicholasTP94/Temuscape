@@ -63,6 +63,7 @@ public class PlayerMovement: MonoBehaviour
             isRunning = runAction.action.IsPressed();
         }
 
+        // Chooses walking or running speed.
         float currentSpeed;
 
         if (isRunning)
@@ -74,6 +75,7 @@ public class PlayerMovement: MonoBehaviour
             currentSpeed = walkSpeed;
         }
 
+        // Calculate player movement from camera direction
         Vector3 cameraForward = cameraTransform.forward;
         Vector3 cameraRight = cameraTransform.right;
 
@@ -100,7 +102,7 @@ public class PlayerMovement: MonoBehaviour
             characterModel.rotation = Quaternion.Slerp(characterModel.rotation, modelRotation, rotationSpeed * Time.deltaTime);
         }
 
-        // Fix VerticalVelocity
+        // Keep player to ground
         if (isGrounded && verticalVelocity < 0)
         {
             verticalVelocity = -2f;
@@ -124,13 +126,13 @@ public class PlayerMovement: MonoBehaviour
             verticalVelocity += gravity * Time.deltaTime;
         }
 
-        // Implementation of Downforce (VericvalMovement)
+        // Implementation of Downforce in movement (VericvalMovement)
         Vector3 vertivalMovement = new Vector3(0f, verticalVelocity, 0f);
 
         //Movement Implementation
         Vector3 finalMovement = moveDirections * currentSpeed + vertivalMovement;
 
-        //Implementation of final movement
+        //Implementation of final movement (with character controller)
         characterController.Move(finalMovement * Time.deltaTime);
     }
 }

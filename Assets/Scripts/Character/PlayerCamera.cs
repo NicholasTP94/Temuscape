@@ -36,9 +36,11 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
+        //Locks mouse cursor during gameplay
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        //Get current camera rotation
         Vector3 currentRotation = transform.eulerAngles;
 
         yaw = currentRotation.y;
@@ -49,6 +51,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void LateUpdate()
     {
+        //Stops camera update if important references are missing
         if (target == null || cameraLookAction == null)
         {
             return;
@@ -57,6 +60,7 @@ public class PlayerCamera : MonoBehaviour
         Vector2 lookInput = Vector2.zero;
         Vector2 zoomInput = Vector2.zero;
 
+        //Reads camera input when UI is closed
         if (inputControllerUI == null || !inputControllerUI.IsUIOpen)
         {
             lookInput = cameraLookAction.action.ReadValue<Vector2>();
@@ -64,27 +68,24 @@ public class PlayerCamera : MonoBehaviour
             zoomInput = cameraZoomAction.action.ReadValue<Vector2>();
         }
 
+        //Camera zoom
         targetDistance -= zoomInput.y * zoomSpeed * 0.01f;
-
         targetDistance = Mathf.Clamp(targetDistance, minDistance, maxDistance);
-
         distance = Mathf.Lerp(distance, targetDistance, zoomSmoothSpeed * Time.deltaTime);
 
+        //Camera rotation from mouse input
         yaw += lookInput.x * sensitivity;
         pitch -= lookInput.y * sensitivity;
-
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
-
         Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
 
+        //Position the camera around the player
         Vector3 targetPosition = target.position + Vector3.up * height;
-
         Vector3 cameraOffset = rotation * new Vector3(0f, 0f, -distance);
-
         Vector3 desiredPosition = targetPosition + cameraOffset;
 
+        //Checks for objects between player and camera
         Vector3 directionToCamera = desiredPosition - targetPosition;
-
         float desiredDistance = directionToCamera.magnitude;
 
         if (desiredDistance > 0.001f)
@@ -96,8 +97,10 @@ public class PlayerCamera : MonoBehaviour
             }
         }
 
+        //Smooth camera movement
         Vector3 finalPosition = Vector3.Lerp(transform.position, desiredPosition, followSmoothSpeed * Time.deltaTime);
 
+        //Prevent camera from going under the ground
         Vector3 groundCheckStart = finalPosition + Vector3.up * 5f;
 
         if (Physics.Raycast(groundCheckStart, Vector3.down,
@@ -111,6 +114,7 @@ public class PlayerCamera : MonoBehaviour
             }
         }
 
+        //Apply final camera position and look at player
         transform.position = finalPosition;
 
         transform.LookAt(targetPosition);

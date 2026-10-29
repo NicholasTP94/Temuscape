@@ -21,6 +21,7 @@ public class PlayerEquipment:MonoBehaviour
 
     private void Awake()
     {
+        //Finds PlayerInventory if not assigned
         if (playerInventory == null)
         {
             playerInventory = GetComponent<PlayerInventory>();
@@ -29,6 +30,7 @@ public class PlayerEquipment:MonoBehaviour
 
     private void Start()
     {
+        //Checks if tools are assigned
         if (availableTools == null || availableTools.Length == 0)
         {
             Debug.LogWarning("No tools assigned to PlayerEquipment.");
@@ -36,6 +38,7 @@ public class PlayerEquipment:MonoBehaviour
             return;
         }
 
+        //Checks if starting tool index is valid
         if (startinngToolIndex < 0 || startinngToolIndex >= availableTools.Length)
         {
             Debug.LogWarning("Invalid starting tool index.");
@@ -43,9 +46,11 @@ public class PlayerEquipment:MonoBehaviour
             return;
         }
 
+        //Equips starting tool
         EquipTool(availableTools[startinngToolIndex]);
     }
 
+    //Tool Equipment
     private void Update()
     {
         if (EquipTool1.action.WasPressedThisFrame())
@@ -58,8 +63,10 @@ public class PlayerEquipment:MonoBehaviour
             EquipToolByIndex(1);
         }
     }
+
     public void EquipTool(ToolDefinition newTool)
     {
+        //Equips a tool only if the player has it in inventory
         if (newTool == null)
         {
             return;
@@ -81,6 +88,7 @@ public class PlayerEquipment:MonoBehaviour
 
     public void EquipToolByIndex(int index)
     {
+        //Equips tool from available tools list
         if (index < 0 || index >= availableTools.Length)
         {
             return;
@@ -91,6 +99,7 @@ public class PlayerEquipment:MonoBehaviour
 
     public void ReplaceTool(ToolDefinition oldTool, ToolDefinition newTool)
     {
+        //Replaces an old tool with a new upgraded tool
         if (oldTool == null || newTool == null)
         {
             return;
@@ -102,6 +111,7 @@ public class PlayerEquipment:MonoBehaviour
             {
                 availableTools[i] = newTool;
 
+                //Equips the new tool if the old one was currently equipped
                 if (equippedTool == oldTool)
                 {
                     EquipTool(newTool);
